@@ -176,6 +176,7 @@ https://phpcon.php.gr.jp/2020/ より引用。
 
 - itoshoさん（[@itosho](https://twitter.com/itosho)）
 - [スライド](https://speakerdeck.com/itosho525/learn-a-di-container-through-cakephp)
+- [サンプルコード](https://github.com/itosho/x-cakephp-di-container)
 
 ### [PhpStorm を使えばほとんどコード補完されるんだってばさ](https://fortee.jp/phpcon-2020/proposal/71376d1b-a432-4ce8-bb94-42abe349fc9a)
 
