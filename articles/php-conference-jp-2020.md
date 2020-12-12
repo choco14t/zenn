@@ -89,6 +89,7 @@ https://phpcon.php.gr.jp/2020/ より引用。
 
 - 株式会社 Cygames | 髙野 祐輝さん
 - [スライド（後日ブログにアップ予定）](#)
+  - エンジニアブログは[こちら](https://tech.cygames.co.jp/)
 
 ### [事業のスケールアウトを支える PHP で作る分散アーキテクチャ](https://fortee.jp/phpcon-2020/proposal/45c84e7e-73c7-49ad-a5c3-b7da69e14d59)
 
@@ -97,12 +98,9 @@ https://phpcon.php.gr.jp/2020/ より引用。
 
 ### [パネルセッション「ひさてるさんに聞け」](https://fortee.jp/phpcon-2020/proposal/564eea5e-2101-4118-bd11-a2d159ea6e7b)
 
-- たなかひさてるさん
-  - [Twitter](https://twitter.com/tanakahisateru)
-- イアン・ブライソンさん
-  - [Twitter](https://twitter.com/brison_ian)
-- 小山哲志さん
-  - [Twitter](https://twitter.com/koyhoge)
+- たなかひさてるさん（[@tanakahisateru](https://twitter.com/tanakahisateru)）
+- イアン・ブライソンさん（[@brison_ian](https://twitter.com/brison_ian)）
+- 小山哲志さん（[@koyhoge](https://twitter.com/koyhoge)）
 
 ### [ウェブセキュリティのありがちな誤解を解説する](https://fortee.jp/phpcon-2020/proposal/4aed77af-edcd-4373-8564-ce87d25025ef)
 
@@ -277,11 +275,14 @@ https://phpcon.php.gr.jp/2020/ より引用。
 ### [Service communication re:Born](https://fortee.jp/phpcon-2020/proposal/d4bb394d-db82-48ff-9bc6-cd7907dc61a8)
 
 - Nick Chiuさん（[@Thr33One](https://twitter.com/Thr33One)）
+- [スライド（pdf）](https://drive.google.com/file/d/1E9ywciK0mmfBIbC22znjN4JrEuSjx2Py/view)
 
 ### [How good are my tests?](https://fortee.jp/phpcon-2020/proposal/40afb643-4f77-497d-8ed9-7a5a985039c5)
 
 - Stephan Hochdoerferさん（[@shochdoerfer](https://twitter.com/shochdoerfer)）
+- [スライド](https://talks.bitexpert.de/phpconjapan20-testquality/#/)
 
 ### [Functional Programming in PHP](https://fortee.jp/phpcon-2020/proposal/4cd41f42-219c-4653-a862-6b372df1e52e)
 
 - Lochemem Michaelさん（[@agiroloki](https://twitter.com/agiroloki)）
+- [スライド](https://speakerdeck.com/ace411/functional-programming-in-php-php-conference-japan-2020)
