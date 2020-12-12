@@ -62,6 +62,29 @@ https://phpcon.php.gr.jp/2020/ より引用。
 - [スライド](https://speakerdeck.com/nrslib/introduction-to-web-application-design)
 - [サンプルコード](https://github.com/nrslib/scrum-app-sample-php)
 
+### [玩具サブスクリプション・レンタルサービスの代表の子どもたちにPHPについて語ってもらった](https://fortee.jp/phpcon-2020/proposal/074a2852-1ab5-4260-8091-98a4544eff77)
+
+- 株式会社トラーナ | 志田典道さん
+
+### [3分で分かるConnehito Tech Vision](https://fortee.jp/phpcon-2020/proposal/534381bb-ea3f-4049-aa2a-d907329fb19c)
+
+- コネヒト株式会社 | 伊藤　翔さん
+- [スライド](https://speakerdeck.com/itosho525/connehito-tech-vision-in-3-minutes)
+
+### [Lenet の開発環境の紹介](https://fortee.jp/phpcon-2020/proposal/36cd4c24-67e9-4945-8ee2-4731bb550e8d)
+
+- 株式会社ホワイトプラス | 古賀 敦士さん
+- [スライド](https://speakerdeck.com/atsushikoga/lenet-falsekai-fa-huan-jing-falseshao-jie)
+
+### [福岡市のお墨付き！エンジニアフレンドリー企業に選ばれたFusicの実態に迫る！](https://fortee.jp/phpcon-2020/proposal/8ac7ad85-2372-47ad-a186-27b820dd456b)
+
+- 株式会社Fusic | 槇原 竜之輔さん
+- [スライド](https://speakerdeck.com/ryu022304/php-conference-2020-sponsor-lt-fusic)
+
+### [PHP8 on AWS lambda](https://fortee.jp/phpcon-2020/proposal/111cd590-b83f-46bd-b965-9cf9259d5f16)
+
+- 有限会社アリウープ | 柏岡秀男さん
+
 ### [長期運用を目指す『Shadowverse』におけるリファクタ事例の紹介 〜テストの導入とメンバーへの普及法〜](https://fortee.jp/phpcon-2020/proposal/ab40d17d-37e7-42af-8a88-188a61c6745b)
 
 - 株式会社 Cygames | 髙野 祐輝さん
