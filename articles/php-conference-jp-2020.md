@@ -41,15 +41,6 @@ https://phpcon.php.gr.jp/2020/ より引用。
 - [#track5](https://twitter.com/search?q=%23track5&src=typed_query)
 - [#track6](https://twitter.com/search?q=%23track6&src=typed_query)
 
-### Youtube アーカイブ
-
-- [Track 1](https://www.youtube.com/watch?v=1SPu9Otl6uE)
-- [Track 2](https://www.youtube.com/watch?v=jtj-brpcCow)
-- [Track 3](https://www.youtube.com/watch?v=o31zLx6A8V8)
-- [Track 4](https://www.youtube.com/watch?v=qajWdSC7Auk)
-- [Track 5 (PHP8 Special)](https://www.youtube.com/watch?v=0pn3Om9xBKY)
-- [Track 6 (International)](https://www.youtube.com/watch?v=sOV5b9EcQV4)
-
 ## Track 1
 
 ### [PHP の今とこれから 2020](https://fortee.jp/phpcon-2020/proposal/d61c47b7-04b5-4f07-8203-039796f09c32)
