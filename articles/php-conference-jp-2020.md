@@ -264,7 +264,7 @@ https://phpcon.php.gr.jp/2020/ より引用。
 
 ## Track 5
 
-### PHP 8 で作る JSON パーサ
+### [PHP 8 で作る JSON パーサ](https://www.youtube.com/watch?v=TDZz96Hzmjo)
 
 - 新原雅司さん（[@shin1x1](https://twitter.com/shin1x1)）
 - [スライド](https://speakerdeck.com/shin1x1/php8-json-parser)
