@@ -1,0 +1,5 @@
+rules:
+  - expected: Google
+    specs:
+      - from: google
+        to: Google
