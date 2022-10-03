@@ -1,5 +1,5 @@
 ---
-title: 'FieldMiddleware を使って Field Level Permissions を実装する'
+title: 'FieldMiddleware で Field Level Permissions を実装する'
 emoji: '🐈‍⬛'
 type: 'tech' # tech: 技術記事 / idea: アイデア
 topics: ['NestJS', 'Apollo', 'GraphQL', 'TypeScript']
@@ -86,7 +86,7 @@ CREATE src/user/user.module.ts (81 bytes)
 UPDATE src/app.module.ts (478 bytes)
 ```
 
-次に Type の定義を行います。今回はアクセス制限のある `email` と常にアクセスできる `name` を定義します。
+次に Type の定義を行います。今回はアクセス制限のある `email` と常にアクセスできる `name` を定義します。この時点では `email`、`name` どちらも常にアクセスできます。
 
 ```typescript:src/user/user.type.ts
 import { Field, ID, ObjectType } from '@nestjs/graphql';
@@ -137,7 +137,68 @@ export class UserResolver {
 
 ## context のセットアップ
 
-次にログインしているユーザを保持するために context の設定を行います。context は GraphQLModule に定義することができます。
+次にログインしているユーザを保持するために context の設定を行います。context は GraphQLModule で定義することができます。
+
+余談ですが、context が未定義の場合は使用している Apollo パッケージで予め定義されているオブジェクトが context として設定されます。Nest の場合は以下のどちらかがデフォルトで設定されます。
+
+| フレームワーク | context                                          |
+| -------------- | ------------------------------------------------ |
+| Express        | { req: express.Request, res: express.Response }  |
+| Fastify        | { request: FastifyRequest, reply: FastifyReply } |
+
+今回はリクエストの Authorization ヘッダーを確認し、アクセスしているユーザを判別するようにします。型やダミーデータはひとまず `AppModule` にベタ書きします。
+
+```diff typescript:src/app.module.ts
+ import { join } from 'path';
+ import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
+ import { Module } from '@nestjs/common';
+ import { GraphQLModule } from '@nestjs/graphql';
+
++ enum ViewerRole {
++   MEMBER,
++   ADMIN,
++ }
++
++ interface Viewer {
++   userName: string;
++   role: ViewerRole;
++ }
++
++ interface AppContext {
++   viewer: Viewer | undefined;
++ }
++
++ const users: Viewer[] = [
++   { userName: 'user_1', role: ViewerRole.MEMBER },
++   { userName: 'user_2', role: ViewerRole.ADMIN },
++ ];
+
+ @Module({
+   imports: [
+     GraphQLModule.forRoot<ApolloDriverConfig>({
+       driver: ApolloDriver,
+       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+       sortSchema: true,
++      context: ({ req }): AppContext => {
++        const token = req.headers.authorization || '';
++        const viewer = users.find((user) => user.userName === token);
++
++        return { viewer };
++      },
+     }),
+     UserModule,
+   ],
+ })
+ export class AppModule {}
+```
+
+## FieldMiddleware の実装
+
+ようやく本題の FieldMiddleware を実装します。
+
+```typescript:shared/field-middleware/check-role.middleware.ts
+
+```
 
 # さいごに
 
@@ -145,3 +206,4 @@ export class UserResolver {
 
 - [Field middleware | NestJS](https://docs.nestjs.com/graphql/field-middleware)
 - [Extensions | NestJS](https://docs.nestjs.com/graphql/extensions)
+- [API Reference: ApolloServer - Apollo GraphQL Docs](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#middleware-specific-context-fields)
