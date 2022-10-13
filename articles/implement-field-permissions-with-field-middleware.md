@@ -3,7 +3,8 @@ title: 'FieldMiddleware で Field Permissions を実装する'
 emoji: '🐈‍⬛'
 type: 'tech' # tech: 技術記事 / idea: アイデア
 topics: ['NestJS', 'Apollo', 'GraphQL', 'TypeScript']
-published: false
+published: true
+published_at: 2022-10-14 10:00
 ---
 
 :::message
@@ -11,6 +12,8 @@ published: false
 :::
 
 # はじめに
+
+[スペースマーケット](https://www.spacemarket.com/)でバックエンドエンジニアをしている masuda です。
 
 GraphQL で API を実装していて、ある Type のフィールドに対してアクセス制御を適用したいといったケースがあると思います。例えば、ログインユーザはアクセスできる、特定の権限を持つユーザのみアクセスできるといったものが挙げられます。
 
@@ -273,3 +276,16 @@ NestJS 上で graphql-shield を使うことも可能なので、プロジェク
 - [Field middleware | NestJS](https://docs.nestjs.com/graphql/field-middleware)
 - [Extensions | NestJS](https://docs.nestjs.com/graphql/extensions)
 - [API Reference: ApolloServer - Apollo GraphQL Docs](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#middleware-specific-context-fields)
+
+# 宣伝
+
+スペースマーケットでは一緒に働く仲間を募集しています。
+サービス内容や、使用技術に興味を持たれた方は是非ご応募ください！！
+
+https://www.wantedly.com/projects/1113570
+https://www.wantedly.com/projects/1113544
+https://www.wantedly.com/projects/1061116
+
+カルチャーの概要や使用技術が知りたい方はこちら ↓↓
+
+https://spacemarket.co.jp/recruit/engineer/
