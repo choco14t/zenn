@@ -1,5 +1,5 @@
 ---
-title: 'FieldMiddleware で Field Level Permissions を実装する'
+title: 'FieldMiddleware で Field Permissions を実装する'
 emoji: '🐈‍⬛'
 type: 'tech' # tech: 技術記事 / idea: アイデア
 topics: ['NestJS', 'Apollo', 'GraphQL', 'TypeScript']
@@ -14,12 +14,7 @@ published: false
 
 GraphQL で API を実装していて、ある Type のフィールドに対してアクセス制御を適用したいといったケースがあると思います。例えば、ログインユーザはアクセスできる、特定の権限を持つユーザのみアクセスできるといったものが挙げられます。
 
-上記のようなフィールドに対する制御を NestJS では FieldMiddleware を使うことで実現することができます。
-
-:::message
-TODO: GraphQL に関する詳細の説明はしないことを明記する。
-TODO: サンプルリポジトリのリンクを貼る
-:::
+上記のようなフィールドに対する制御を NestJS では FieldMiddleware を使うことで実現することができます。本記事では NestJS のプロジェクト作成から FieldMiddleware の適用までを解説します。
 
 # FieldMiddleware について
 
@@ -31,7 +26,7 @@ FieldMiddleware は関数で定義し、`MiddlewareContext` と `NextFn` 型の 
 
 # context と組み合わせた実装例
 
-それでは実際に FieldMiddleware 実装していきます。以下の内容を例として進めていきます。
+以下の内容を例として実装を進めていきます。
 
 - id から単一のユーザを取得できる `Query.user` を定義する
 - User は id、name、email のフィールドを持つ
@@ -99,7 +94,7 @@ export class User {
   @Field()
   name: string;
 
-  @Field()
+  @Field({ nullable: true })
   email: string;
 }
 ```
@@ -114,7 +109,7 @@ CREATE src/user/user.resolver.ts (86 bytes)
 UPDATE src/user/user.module.ts (158 bytes)
 ```
 
-仮実装として、固定値を返す `Query.user` を定義します。
+記事内では値の確認ができれば良いので、固定値を返す `Query.user` を定義します。
 
 ```typescript:src/user/user.resolver.ts
 import { Query, Resolver } from '@nestjs/graphql';
@@ -139,7 +134,7 @@ export class UserResolver {
 
 次にログインしているユーザを保持するために context の設定を行います。context は GraphQLModule で定義することができます。
 
-余談ですが、context が未定義の場合は使用している Apollo パッケージで予め定義されているオブジェクトが context として設定されます。Nest の場合は以下のどちらかがデフォルトで設定されます。
+余談ですが、context が未定義の場合は使用している Apollo パッケージで予め定義されているオブジェクトが context として設定されます。NestJS の場合は以下のどちらかがデフォルトで設定されます。
 
 | フレームワーク | context                                          |
 | -------------- | ------------------------------------------------ |
@@ -194,13 +189,81 @@ export class UserResolver {
 
 ## FieldMiddleware の実装
 
-ようやく本題の FieldMiddleware を実装します。
+管理者権限を持つかを判別する `hasAdminRole` を実装します。
 
-```typescript:shared/field-middleware/check-role.middleware.ts
+`FieldMiddleware` は `FieldMiddleware<TSource, TContext, TArgs, TOutput>` の Generics で、引数はそれぞれ次の型情報と対応しています。
 
+| 引数     | 対応する型情報                                                     |
+| -------- | ------------------------------------------------------------------ |
+| TSource  | 渡されたフィールドの ObjectType。                                  |
+| TContext | GraphQL サーバで定義した context。本記事では `AppContext` となる。 |
+| TArgs    | フィールドで使用される引数。引数がない場合は `{}` となる。         |
+| TOutput  | FieldMiddleware が返却する値。                                     |
+
+上記の引数と照らし合わせると、実装は下記のようになります。
+
+```typescript:src/user/field-middlewares/has-admin-role.middleware.ts
+import { FieldMiddleware } from '@nestjs/graphql';
+import { AppContext, ViewerRole } from '../../app.module';
+
+export const hasAdminRole: FieldMiddleware<User, AppContext> = async (
+  ctx,
+  next,
+) => {
+  const {
+    context: { viewer },
+  } = ctx;
+
+  return viewer?.role === ViewerRole.ADMIN ? next() : null;
+};
+```
+
+`hasAdminRole` 内で `TSource` の参照は行われていないですが、`User` に対して使用する Middleware なので明示しています。
+
+## FieldMiddleware の適用
+
+前項で実装した FieldMiddleware を `User.email` に適用します。`FieldOptions` の `middleware` プロパティに適用したい FieldMiddleware を配列で渡すことで動作します。
+
+```diff typescript:src/user/user.type.ts
+ import { Field, ID, ObjectType } from '@nestjs/graphql';
+ import { hasAdminRole } from './field-middlewares/check-admin-role.middleware';
+
+ @ObjectType()
+ export class User {
+   @Field(() => ID)
+   id: string;
+
+   @Field()
+   name: string;
+
++  @Field({ nullable: true, middleware: [hasAdminRole] })
+   email: string;
+ }
+```
+
+## 動作確認
+
+最後に FieldMiddleware が動作するか確認してみます。
+
+```sh
+# 管理者権限でないユーザでのリクエスト
+curl -H 'Content-Type: application/json' -H 'Authorization: user_1' -d '{ "query": "query { user { email } }" }' http://localhost:3000/graphql
+# output
+{"data":{"user":{"email":null}}}
+
+# 管理者権限を持つユーザでのリクエスト
+curl -H 'Content-Type: application/json' -H 'Authorization: user_2' -d '{ "query": "query { user { email } }" }' http://localhost:3000/graphql
+# output
+{"data":{"user":{"email":"user_1@example.com"}}}
 ```
 
 # さいごに
+
+簡易的な FieldMiddleware を定義し、ObjectType に適用するまでを行いました。FieldMiddleware は複数適用させたり、グローバルに適用してアプリケーション全体に適用することもできるので興味がある方は試してみてください。
+
+NestJS は Code First で実装する上でも便利な機能が提供されています。しかし、FieldMiddleware に関しては [graphql-shield](https://www.the-guild.dev/graphql/shield) と比較すると `or` のようなルールのいずれかを満たすか判別する機能が提供されていないため、複雑なルールを適用したい場合は FieldMiddleware だと実現が難しくなると思います。
+
+NestJS 上で graphql-shield を使うことも可能なので、プロジェクトに応じてライブラリを使い分けると良いかもしれません。
 
 # 参考
 
