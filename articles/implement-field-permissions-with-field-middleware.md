@@ -211,6 +211,7 @@ export class UserResolver {
 ```typescript:src/user/field-middlewares/has-admin-role.middleware.ts
 import { FieldMiddleware } from '@nestjs/graphql';
 import { AppContext, ViewerRole } from '../../app.module';
+import { User } from '../user.type';
 
 export const hasAdminRole: FieldMiddleware<User, AppContext> = async (
   ctx,
@@ -267,7 +268,7 @@ curl -H 'Content-Type: application/json' -H 'Authorization: user_2' -d '{ "query
 
 簡易的な FieldMiddleware を定義し、ObjectType に適用するまでを行いました。FieldMiddleware は複数適用させたり、グローバルに適用してアプリケーション全体に適用することもできるので興味がある方は試してみてください。
 
-NestJS は Code First で実装する上でも便利な機能が提供されています。しかし、FieldMiddleware に関しては [graphql-shield](https://www.the-guild.dev/graphql/shield) と比較すると `or` のようなルールのいずれかを満たすか判別する機能が提供されていないため、複雑なルールを適用したい場合は FieldMiddleware だと実現が難しくなると思います。
+NestJS は Code First で実装する上で便利な機能が提供されています。しかし、FieldMiddleware に関しては [graphql-shield](https://www.the-guild.dev/graphql/shield) と比較すると `or` のようなルールのいずれかを満たすか判別する機能が提供されていないため、複雑なルールを適用したい場合は FieldMiddleware だと実現が難しくなると思います。
 
 NestJS 上で graphql-shield を使うことも可能なので、プロジェクトに応じてライブラリを使い分けると良いかもしれません。
 
