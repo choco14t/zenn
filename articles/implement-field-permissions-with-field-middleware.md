@@ -5,6 +5,7 @@ type: 'tech' # tech: 技術記事 / idea: アイデア
 topics: ['NestJS', 'Apollo', 'GraphQL', 'TypeScript']
 published: true
 published_at: 2022-10-14 10:00
+publication_name: 'spacemarket'
 ---
 
 :::message
