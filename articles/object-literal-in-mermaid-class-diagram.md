@@ -3,8 +3,8 @@ title: 'Mermaid の Class Diagram で object literal を書く'
 emoji: '🧜‍♀️‍'
 type: 'idea' # tech: 技術記事 / idea: アイデア
 topics: ['Mermaid']
-published: false
-published_at: 2022-10-29 14:00
+published: true
+published_at: 2022-10-29 20:00
 ---
 
 Mermaid の Class Diagram 上で object literal の型を書くとき、そのまま `{ key: value }` と記述するとエラーになります。
