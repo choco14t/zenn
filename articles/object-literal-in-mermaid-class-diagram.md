@@ -38,3 +38,10 @@ classDiagram
     +someMethod() : (SomeType & #0123; key: value #0125;)
   }
 ```
+
+ちょっとハッキーな書き方ですが、参考までに。
+
+# 参考
+
+- [Entity codes to escape characters](https://mermaid-js.github.io/mermaid/#/sequenceDiagram?id=entity-codes-to-escape-characters)
+- [Entity - MDN](https://developer.mozilla.org/ja/docs/Glossary/Entity)
