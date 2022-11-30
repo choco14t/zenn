@@ -4,7 +4,7 @@ emoji: '🦁‍'
 type: 'idea' # tech: 技術記事 / idea: アイデア
 topics: ['test']
 published: true
-published_at: 2022-11-30 13:00
+published_at: 2022-12-01 12:00
 ---
 
 https://twitter.com/t_wada/status/1595920886926036992
