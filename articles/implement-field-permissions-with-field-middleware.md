@@ -14,7 +14,7 @@ publication_name: 'spacemarket'
 
 # はじめに
 
-[スペースマーケット](https://www.spacemarket.com/)でバックエンドエンジニアをしている masuda です。
+[スペースマーケット](https://www.spacemarket.com/)でバックエンドエンジニアをしている choco です。
 
 GraphQL で API を実装していて、ある Type のフィールドに対してアクセス制御を適用したいといったケースがあると思います。例えば、ログインユーザはアクセスできる、特定の権限を持つユーザのみアクセスできるといったものが挙げられます。
 
