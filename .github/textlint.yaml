@@ -1,0 +1,29 @@
+name: textlint
+
+on:
+  push:
+    branches:
+      - 'article/**'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  textlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout
+      - uses: actions/setup-node
+
+      - name: Install textlint
+        run: >
+          npm i -D
+          textlint
+          textlint-rule-preset-smarthr
+          textlint-rule-prh
+
+      - name: Install modules
+        run: npm i
+
+      - name: Run textlint
+        run: npx textlint "articles/*.md"

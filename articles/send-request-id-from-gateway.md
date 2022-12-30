@@ -8,7 +8,7 @@ published_at: 2022-12-01 12:00
 publication_name: 'spacemarket'
 ---
 
-# はじめに
+# 始めに
 
 [スペースマーケット](https://www.spacemarket.com/)でバックエンドエンジニアをしている choco です。
 
@@ -24,7 +24,7 @@ publication_name: 'spacemarket'
 
 # ゲートウェイでリクエスト ID のヘッダを追加する
 
-はじめに各アプリケーションに送信するリクエスト ID をゲートウェイに設定します。
+始めに各アプリケーションへ送信するリクエスト ID をゲートウェイに設定します。
 
 Apollo Server の context でリクエスト ID を生成し、`RemoteGraphQLDataSource.willSendRequest` で生成された ID をヘッダに追加します。ヘッダは `x-request-id` とします。
 
@@ -142,7 +142,7 @@ query QueryPosts {
 }
 ```
 
-実行すると以下のようなログが出力されることが確認できます。
+実行すると以下のようなログが出力されることを確認できます。
 
 ![](/images/send-request-id-from-gateway/log-posts.png)
 _Posts アプリケーションのログ_
@@ -150,7 +150,7 @@ _Posts アプリケーションのログ_
 ![](/images/send-request-id-from-gateway/log-users.png)
 _Users アプリケーションのログ_
 
-同じリクエスト ID が送信されていますね！Good👍
+同じリクエスト ID が送信されていますね。Good👍。
 
 # Appendix
 
@@ -178,7 +178,7 @@ end
 
 # Rails + lograge のログにリクエスト ID を追加する
 
-lograge を使ってログ出力をしている場合は `config.lograge.custom_options` を使ってパラメータを追加することでログに ID を追加することができます。
+lograge を使ってログ出力をしている場合は `config.lograge.custom_options` を使ってパラメータを追加することでログに ID を追加できます。
 
 Datadog と連携している場合は次の設定をすることで `request_id` によるフィルタリングが可能になります。
 
@@ -231,12 +231,12 @@ Apollo Gateway を使ったアプリケーションの運用をされている�
 # 宣伝
 
 スペースマーケットでは一緒に働く仲間を募集しています。
-サービス内容や、使用技術に興味を持たれた方は是非ご応募ください！！
+サービス内容や、使用技術に興味を持たれた方はぜひご応募ください。
 
 https://www.wantedly.com/projects/1113570
 https://www.wantedly.com/projects/1113544
 https://www.wantedly.com/projects/1061116
 
-カルチャーの概要や使用技術が知りたい方はこちら ↓↓
+カルチャーの概要や使用技術が知りたい方はこちら。
 
 https://spacemarket.co.jp/recruit/engineer/

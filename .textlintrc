@@ -1,19 +1,34 @@
 {
-  "filters": {},
+  "filters": {
+    "allowlist": {
+      "allow": [
+        "/株式会社/g",
+        "ヘッダ",
+        "/Active Record/",
+        "/:::/",
+        "/:::details\\s.*/"
+      ]
+    }
+  },
   "rules": {
     "preset-ja-spacing": {
       "ja-space-between-half-and-full-width": {
         "space": "always"
       }
     },
-    "preset-ja-technical-writing": true,
-    "spellcheck-tech-word": true,
-    "ja-technical-writing/ja-no-mixed-period": {
-      "allowPeriodMarks": [":"]
+    "preset-ja-technical-writing": {
+      "max-kanji-continuous-len": {
+        "max": 7
+      },
+      "sentence-length": {
+        "max": 160
+      }
     },
+    "spellcheck-tech-word": true,
     "prh": {
       "rulePaths": [
-        "./prh.yml"
+        "rules/prh.yml",
+        "rules/WEB+DB_PRESS.yml"
       ]
     }
   }

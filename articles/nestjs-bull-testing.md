@@ -5,9 +5,9 @@ type: 'tech' # tech: 技術記事 / idea: アイデア
 topics: ['NestJS', 'Bull']
 published: true
 ---
-# はじめに
+# 始めに
 
-最近 [@nestjs/bull](https://github.com/nestjs/bull) を使った非同期ジョブの実装をしていて、テストを書くのに少し手間取ったので解決策の共有になります。
+最近 [@nestjs/bull](https://github.com/nestjs/bull) を使った非同期ジョブの実装をしていて、テストを書くのに少し手間どったので解決策の共有になります。
 ユニットテストと E2E テストでモックの内容が異なるのでそれぞれ記載しています。
 
 また、テストコードは[公式サンプル](https://github.com/nestjs/nest/tree/master/sample/26-queues)を元に作成しています。
@@ -54,8 +54,8 @@ describe('AudioController', () => {
 
 # E2E テストの場合
 
-E2E のように Module 単位でテストする場合は `overrideProvider()` を使うことでモックできます。
-注意点として、Module 内に Consumer が含まれる場合は定義しているメソッドによって Queue に対して追加でメソッドのモックが必要です。（おそらく、Queue を遅延実行していない場合は即座に process が実行されてしまうため）
+E2E のようにモジュール単位でテストする場合は `overrideProvider()` を使うことでモックできます。
+注意点として、モジュール内に Consumer が含まれる場合は定義しているメソッドによって Queue に対して追加でメソッドのモックが必要です（おそらく、Queue を遅延実行していない場合は即座に process が実行されてしまうため）
 
 ```ts:audio.e2e.spec.ts
 import * as request from 'supertest';
