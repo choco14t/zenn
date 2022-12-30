@@ -37,10 +37,9 @@ mkdir gateway-logging-example
 ```sh
 cd gateway-logging-example
 
-# パッケージマネージャは全て yarn を選択してください。
-nest new application-posts
-nest new application-users
-nest new gateway
+nest new application-posts -p yarn
+nest new application-users -p yarn
+nest new gateway -p yarn
 ```
 
 各ディレクトリで必要なパッケージを追加しておきます。
