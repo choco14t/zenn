@@ -7,7 +7,7 @@ published: true
 published_at: 2022-10-29 20:00
 ---
 
-Mermaid の Class Diagram 上で object literal の型を書くとき、そのまま `{ key: value }` と記述するとエラーになります。
+Mermaid の Class Diagram 上で object literal の型を書くとき、そのまま `{ key: value }` を記述するとエラーになります。
 
 ```txt
 これだとエラーになる...
@@ -19,7 +19,7 @@ classDiagram
   }
 ```
 
-Mermaid では Entity Code での記述がサポートされているのでこの機能を使うことで object literal を記述することができます。
+Mermaid ではエンティティ Code での記述がサポートされているのでこの機能を使うことで object literal を記述できます。
 
 ```mermaid
 classDiagram
@@ -29,7 +29,7 @@ classDiagram
   }
 ```
 
-上記の図は次のように記述しています。プロパティの定義だと問題なく描画されますが、メソッドの返り値で記述すると描画されなかったため括弧で囲みコロンも明示的に記述しています。（本来だと返り値のコロンは自動で挿入される）
+上記の図は次のように記述しています。プロパティの定義だと問題なく描画されますが、メソッドの戻り値で記述すると描画されなかったため括弧で囲みコロンも明示的に記述しています（本来だと戻り値のコロンは自動で挿入される）
 
 ```txt
 classDiagram
