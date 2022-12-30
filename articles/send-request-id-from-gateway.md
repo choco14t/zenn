@@ -1,5 +1,5 @@
 ---
-title: 'ゲートウェイからリクエストIDを送信してログを追いやすくする'
+title: 'リクエストIDを追加して調査を快適にする'
 emoji: '‍🔍'
 type: 'tech' # tech: 技術記事 / idea: アイデア
 topics: ['graphql', 'apollo', 'typescript', 'nodejs', 'nestjs']
@@ -12,7 +12,9 @@ publication_name: 'spacemarket'
 
 [スペースマーケット](https://www.spacemarket.com/)でバックエンドエンジニアをしている choco です。
 
-現在 API のログは出力しているのですが、1 リクエスト内で実行された GraphQL Query が把握しづらいという課題がありました。今回はリクエストヘッダに ID を付与して各アプリケーションに共有することで課題改善した記録となります。
+スペースマーケットでは API Gateway として Apollo Gateway(Federation) を使用しています。
+
+現在 API のログは出力しているのですが、1 リクエスト内で実行された GraphQL Query が把握しづらいという課題がありました。今回は対応策としてリクエストヘッダに ID を付与し、各アプリケーションに共有することで改善を試みました。
 
 本記事では NestJS を使ってロギングが行えるまでのサンプルプロジェクトを作成していきます。サンプルプロジェクトでは下記のバージョンを使用しています。
 
