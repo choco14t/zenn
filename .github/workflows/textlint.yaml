@@ -12,18 +12,21 @@ jobs:
   textlint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout
-      - uses: actions/setup-node
+      - uses: actions/checkout@3
+      - uses: actions/setup-node@3
 
       - name: Install textlint
         run: >
           npm i -D
           textlint
-          textlint-rule-preset-smarthr
+          textlint-filter-rule-allowlist
+          textlint-rule-preset-ja-spacing
+          textlint-rule-preset-ja-technical-writing
           textlint-rule-prh
+          textlint-rule-spellcheck-tech-word
 
       - name: Install modules
         run: npm i
 
       - name: Run textlint
-        run: npx textlint "articles/*.md"
+        run: npx textlint articles/*.md
