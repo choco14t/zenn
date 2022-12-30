@@ -16,68 +16,99 @@ publication_name: 'spacemarket'
 
 現在 API のログは出力しているのですが、1 リクエスト内で実行された GraphQL Query が把握しづらいという課題がありました。今回は対応策としてリクエストヘッダに ID を付与し、各アプリケーションに共有することで改善を試みました。
 
-本記事では NestJS を使ってロギングが行えるまでのサンプルプロジェクトを作成していきます。サンプルプロジェクトでは下記のバージョンを使用しています。
+本記事では NestJS を使用したコードになっています。実装にあたり使用したバージョンは下記になります。
 
 - Node.js v18.12.1
 - yarn v1.22.19
 - @nestjs/cli v9.1.5
 
-# プロジェクトの作成
-
-はじめにルートディレクトリを作成します。
-
-```sh
-mkdir gateway-logging-example
-```
-
-次にゲートウェイ、アプリケーションディレクトリを作成します。ディレクトリはそれぞれ NestJS の CLI を使って作成します。
-
-アプリケーションは NestJS 公式のサンプルを参考に投稿情報を扱う `application-posts` と ユーザ情報を扱う `application-users` を作成しました。
-
-```sh
-cd gateway-logging-example
-
-nest new application-posts -p yarn
-nest new application-users -p yarn
-nest new gateway -p yarn
-```
-
-各ディレクトリで必要なパッケージを追加しておきます。
-
-:::details パッケージインストール
-`cd` のパスは適宜書き換えてください。
-
-```sh
-cd application-posts
-```
-
-```sh
-cd application-posts
-```
-
-```sh
-cd gateway
-```
-
-:::
-
 # ゲートウェイでリクエスト ID のヘッダを追加する
 
 はじめに各アプリケーションに送信するリクエスト ID をゲートウェイに設定します。
+
 Apollo Server の context でリクエスト ID を生成し、`RemoteGraphQLDataSource.willSendRequest` で生成された ID をヘッダに追加します。ヘッダは `x-request-id` とします。
 
-# 各アプリケーションのログにリクエスト ID を追加する
+```typescript:gateway/src/app.module.ts
+import { IntrospectAndCompose, RemoteGraphQLDataSource } from '@apollo/gateway';
+import { ApolloGatewayDriver, ApolloGatewayDriverConfig } from '@nestjs/apollo';
+import { Module } from '@nestjs/common';
+import { GraphQLModule } from '@nestjs/graphql';
+import { v4 } from 'uuid';
 
-次に 2 つのアプリケーションでログ出力できるようにします。
+@Module({
+  imports: [
+    GraphQLModule.forRoot<ApolloGatewayDriverConfig>({
+      driver: ApolloGatewayDriver,
+      server: {
+        cors: true,
+        context: () => {
+          // RemoteGraphQLDataSource で扱う requestId を定義
+          return { requestId: v4() };
+        },
+      },
+      gateway: {
+        supergraphSdl: new IntrospectAndCompose({
+          subgraphs: [
+            { name: 'posts', url: 'http://localhost:3001/graphql' },
+            { name: 'users', url: 'http://localhost:3002/graphql' },
+          ],
+        }),
+        buildService: ({ url }) =>
+          new RemoteGraphQLDataSource<{ requestId: string }>({
+            url,
+            willSendRequest: ({ request, context }) => {
+              // server.context で定義した requestId をヘッダに設定
+              request.http.headers.set('x-request-id', context.requestId);
+            },
+          }),
+      },
+    }),
+  ],
+})
+export class AppModule {}
+```
+
+# アプリケーションのログにリクエスト ID を追加する
+
+次にアプリケーションでログ出力できるようにします。
 Apollo Server では `ApolloServerPlugin` を使ってロギングを行えます。
 
-## Posts アプリケーション
+```typescript:logging.plugin.ts
+import { Plugin } from '@nestjs/apollo';
+import { ExpressContext } from 'apollo-server-express';
+import {
+  ApolloServerPlugin,
+  GraphQLRequestContext,
+  GraphQLRequestListener,
+} from 'apollo-server-plugin-base';
 
-## Users アプリケーション
+@Plugin()
+export class LoggingPlugin implements ApolloServerPlugin {
+  async requestDidStart(
+    requestContext: GraphQLRequestContext<ExpressContext>
+  ): Promise<GraphQLRequestListener<ExpressContext>> {
+    return {
+      willSendResponse: async ({ context }) => {
+        const {
+          request: { query, variables },
+        } = requestContext;
+        console.log({
+          query,
+          variables: JSON.stringify(variables),
+          request_id: context.req.headers['x-request-id'],
+        });
+      },
+    };
+  }
+}
+```
 
 # 動作確認
 
-ゲートウェイ・アプリケーションの設定ができたので実際に動かしてログを確認してみます。
+上記を適用したサンプルコードを用意しました。
+手元で実行してみたい場合は下記のリポジトリをクローンしてください。
+
+https://github.com/choco14t/example-gateway-logging
 
 :::details ゲートウェイ・アプリケーションの起動
 `cd` のパスは適宜書き換えてください。
@@ -96,9 +127,36 @@ cd gateway && yarn start
 
 :::
 
-# ex1: Rails のログにリクエスト ID を追加する
+http://localhost:3000/graphql をブラウザで開きプレイグラウンドから次のクエリを実行してみます。
 
-今回、NestJS のプロジェクトに加えて Rails アプリケーションにもリクエスト ID を反映させる対応をしていたのでおまけとして書いておきます。
+```graphql
+query QueryPosts {
+  posts {
+    id
+    title
+    user {
+      id
+      name
+    }
+  }
+}
+```
+
+実行すると以下のようなログが出力されることが確認できます。
+
+![](/images/send-request-id-from-gateway/log-posts.png)
+_Posts アプリケーションのログ_
+
+![](/images/send-request-id-from-gateway/log-users.png)
+_Users アプリケーションのログ_
+
+同じリクエスト ID が送信されていますね！Good👍
+
+# Appendix
+
+## Rails のログにリクエスト ID を追加する
+
+今回、NestJS アプリケーションに加えて Rails アプリケーションにもリクエスト ID を反映させる対応をしていたのでおまけとして書いておきます。
 
 Rails では `config.log_tags` を使うことでログにタグ付けが行えます。`config.log_tags = [:uuid]` とすることでログ 1 行に対して ID が付与されます。このとき、Rails では`x-request-id`のヘッダ情報が参照されるため、今回のようにゲートウェイで設定した ID を使うことができます。
 
@@ -116,11 +174,26 @@ end
 
 :::
 
-# ex2: Rails + lograge のログにリクエスト ID を追加する
+今回リクエストヘッダを `x-request-id` とした理由はこのためです。
+
+# Rails + lograge のログにリクエスト ID を追加する
 
 lograge を使ってログ出力をしている場合は `config.lograge.custom_options` を使ってパラメータを追加することでログに ID を追加することができます。
 
 Datadog と連携している場合は次の設定をすることで `request_id` によるフィルタリングが可能になります。
+
+:::details app/controllers/application_controller.rb
+
+```rb:app/controllers/application_controller.rb
+class ApplicationController < ActionController::Base
+  def append_info_to_payload(payload)
+    super
+    payload[:request_id] = request.headers['x-request-id']
+  end
+end
+```
+
+:::
 
 :::details config/environments/development.rb
 
@@ -142,26 +215,11 @@ end
 
 :::
 
-:::details app/controllers/application_controller.rb
-
-```rb:app/controllers/application_controller.rb
-class ApplicationController < ActionController::Base
-  def append_info_to_payload(payload)
-    super
-    payload[:request_id] = request.headers['x-request-id']
-  end
-end
-```
-
-:::
-
 # さいごに
 
 今回はゲートウェイを使用したロギング改善の解説と、おまけとして Rails アプリケーションでの設定方法を紹介しました。
 
 Apollo Gateway を使ったアプリケーションの運用をされている方、Apollo Gateway の使用を検討している方の参考になれば幸いです。
-
-本記事で作成したサンプルプロジェクトは以下のリポジトリになります。
 
 # 参考
 
