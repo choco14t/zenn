@@ -8,7 +8,8 @@
         "/:::/",
         "/:::details\\s.*/",
         "はじめに",
-        "express"
+        "express",
+        "cloudflare"
       ]
     }
   },
