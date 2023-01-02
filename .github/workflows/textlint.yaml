@@ -16,13 +16,25 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'yarn'
+
+      - uses: actions/cache@v3
+        id: node_modules_cache_id
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+
       - uses: reviewdog/action-setup@v1
         with:
           reviewdog_version: latest
 
       - name: Install modules
+        if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
         run: yarn install --frozen-lockfile
+
+      - name: Check yarn list
+        run: yarn list --depth 0
 
       - name: Run textlint
         run: yarn lint >> .textlint.log
