@@ -2,28 +2,50 @@ name: textlint
 
 on:
   pull_request:
-    branches:
-      - main
+    branches: [main]
+    paths: ['articles/*.md']
+
+defaults:
+  run:
+    working-directory: ./
 
 jobs:
-  textlint:
+  textlint-with-reviewdog:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-      - name: Install textlint
-        run: >
-          npm i -D
-          textlint
-          textlint-filter-rule-allowlist
-          textlint-rule-preset-ja-spacing
-          textlint-rule-preset-ja-technical-writing
-          textlint-rule-prh
-          textlint-rule-spellcheck-tech-word
+      - uses: actions/cache@v3
+        id: node_modules_cache_id
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - uses: reviewdog/action-setup@v1
+        with:
+          reviewdog_version: latest
 
       - name: Install modules
-        run: npm i
+        if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
+        run: yarn install
 
       - name: Run textlint
-        run: npx textlint articles/*.md
+        run: yarn textlint -f checkstyle articles/*.md >> .textlint.log
+
+      - name: Run Reviewdog
+        if: failure()
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: cat .textlint.log | reviewdog -f=checkstyle -name="textlint" -reporter="github-pr-review"
