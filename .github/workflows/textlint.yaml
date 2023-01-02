@@ -19,7 +19,7 @@ jobs:
           cache: 'yarn'
       - uses: reviewdog/action-setup@v1
         with:
-        reviewdog_version: latest
+          reviewdog_version: latest
 
       - name: Install modules
         run: yarn install --frozen-lockfile
