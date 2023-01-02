@@ -5,6 +5,10 @@ on:
     branches: [main]
     paths: ['articles/*.md']
 
+defaults:
+  run:
+    working-directory: ./zenn
+
 jobs:
   textlint-with-reviewdog:
     runs-on: ubuntu-latest
