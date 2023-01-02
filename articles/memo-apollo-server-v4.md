@@ -12,7 +12,7 @@ publication_name: 'spacemarket'
 
 [スペースマーケット](https://www.spacemarket.com/)でバックエンドエンジニアをしている choco です。
 
-Apollo Server の v4 が 2022 年 10 月にリリースされました。これにより v2、v3 が deprecated となりました。
+Apollo Server の v4 が 2022 年 10 月にリリースされました。これにより v2、v3 は deprecated となりました。
 
 EOL は 2023 年 10 月 22 日となってます。Apollo Server v2 の一部機能については 2022 年 12 月 31 日に EOL となりました。
 
@@ -57,7 +57,7 @@ v4 では下記パッケージが削除されました。
 
 つまり Express 以外のパッケージが削除されます。
 
-代わりにコミュニティがメンテナンスしているパッケージを使用することができます。
+代わりにコミュニティがメンテナンスしているパッケージを使用できます。
 
 https://github.com/apollo-server-integrations
 
@@ -189,7 +189,7 @@ console.log(`🚀 Server ready at http://localhost:4000/graphql`);
 # さいごに
 
 駆け足気味ですが、v4 での変更点を確認しました。
-去年末に [レイオフ](https://www.apollographql.com/blog/announcement/ceo-geoff-schmidts-message-to-apollo-employees/) を実施したこともあり、組織としても転換期なのかもしれません。
+去年末に [レイオフ](https://www.apollographql.com/blog/announcement/ceo-geoff-schmidts-message-to-apollo-employees/) を実施したこともあり、組織としても転換期と言えます。
 
 Apollo Server v2、v3 を使っている方の参考になれば幸いです。
 
