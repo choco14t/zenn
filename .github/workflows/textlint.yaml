@@ -41,18 +41,8 @@ jobs:
         if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
         run: yarn install
 
-      - name: Test
-        run: >
-          yarn add -D
-          textlint
-          textlint-filter-rule-allowlist
-          textlint-rule-preset-ja-spacing
-          textlint-rule-preset-ja-technical-writing
-          textlint-rule-prh
-          textlint-rule-spellcheck-tech-word
-
       - name: Run textlint
-        run: yarn textlint articles/*.md >> .textlint.log
+        run: yarn textlint -f checkstyle articles/*.md >> .textlint.log
 
       - name: Run Reviewdog
         if: failure()
