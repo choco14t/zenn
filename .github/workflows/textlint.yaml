@@ -5,10 +5,6 @@ on:
     branches: [main]
     paths: ['articles/*.md']
 
-defaults:
-  run:
-    working-directory: ./zenn
-
 jobs:
   textlint-with-reviewdog:
     runs-on: ubuntu-latest
@@ -35,10 +31,10 @@ jobs:
 
       - name: Install modules
         if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
-        run: npm install
+        run: yarn install
 
       - name: Run textlint
-        run: npx textlint articles/*.md >> .textlint.log
+        run: yarn textlint articles/*.md >> .textlint.log
 
       - name: Run Reviewdog
         if: failure()
