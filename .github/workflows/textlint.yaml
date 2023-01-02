@@ -5,6 +5,10 @@ on:
     branches: [main]
     paths: ['articles/*.md']
 
+defaults:
+  run:
+    working-directory: ./
+
 jobs:
   textlint-with-reviewdog:
     runs-on: ubuntu-latest
@@ -24,6 +28,10 @@ jobs:
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
 
       - uses: reviewdog/action-setup@v1
         with:
