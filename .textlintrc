@@ -7,7 +7,9 @@
         "/Active Record/",
         "/:::/",
         "/:::details\\s.*/",
-        "はじめに"
+        "はじめに",
+        "express",
+        "cloudflare"
       ]
     }
   },
