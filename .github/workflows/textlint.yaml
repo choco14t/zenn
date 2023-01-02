@@ -31,7 +31,7 @@ jobs:
 
       - name: Install modules
         if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
-        run: yarn install --frozen-lockfile
+        run: npm install
 
       - name: Run textlint
         run: npx textlint articles/*.md >> .textlint.log
