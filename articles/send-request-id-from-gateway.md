@@ -8,23 +8,27 @@ published_at: 2022-12-01 12:00
 publication_name: 'spacemarket'
 ---
 
-# 始めに
+# はじめに
 
 [スペースマーケット](https://www.spacemarket.com/)でバックエンドエンジニアをしている choco です。
 
-スペースマーケットでは API Gateway として Apollo Gateway(Federation) を使用しています。
+スペースマーケットでは API Gateway として Apollo Gateway(Federation) を使用しています。現在 API のログは出力しているのですが、1 リクエスト内で実行された GraphQL Query が把握しづらいという課題がありました。
 
-現在 API のログは出力しているのですが、1 リクエスト内で実行された GraphQL Query が把握しづらいという課題がありました。今回は対応策としてリクエストヘッダに ID を付与し、各アプリケーションに共有することで改善を試みました。
+今回は Apollo Gateway の RemoteGraphQLDataSource を使用してリクエストヘッダに ID を付与し、各アプリケーションの GraphQL context から参照できるようにすることで改善を試みました。
+
+![](/images/send-request-id-from-gateway/diagram.png)
 
 本記事では NestJS を使用したコードになっています。実装にあたり使用したバージョンは下記になります。
 
 - Node.js v18.12.1
+- Apollo Server v3.11.1
+- NestJS v9.2.1
 - yarn v1.22.19
 - @nestjs/cli v9.1.5
 
 # ゲートウェイでリクエスト ID のヘッダを追加する
 
-始めに各アプリケーションへ送信するリクエスト ID をゲートウェイに設定します。
+最初に各アプリケーションへ送信するリクエスト ID を設定します。
 
 Apollo Server の context でリクエスト ID を生成し、`RemoteGraphQLDataSource.willSendRequest` で生成された ID をヘッダに追加します。ヘッダは `x-request-id` とします。
 
@@ -72,6 +76,8 @@ export class AppModule {}
 
 次にアプリケーションでログ出力できるようにします。
 Apollo Server では `ApolloServerPlugin` を使ってロギングを行えます。
+
+また、ヘッダを参照するためのリクエストオブジェクトは GraphQL context から参照できます。
 
 ```typescript:logging.plugin.ts
 import { Plugin } from '@nestjs/apollo';
@@ -223,7 +229,8 @@ Apollo Gateway を使ったアプリケーションの運用をされている�
 
 # 参考
 
-- [API Reference: @apollo/gateway - Apollo GraphQL Docs](https://www.apollographql.com/docs/apollo-server/using-federation/api/apollo-gateway/#willsendrequest)
+- [API Reference: @apollo/gateway - Apollo GraphQL Docs](https://www.apollographql.com/docs/apollo-server/using-federation/api/apollo-gateway)
+- [packages/apollo-server-express/src/ApolloServer.ts#L48-L51](https://github.com/apollographql/apollo-server/blob/apollo-server-express%403.11.1/packages/apollo-server-express/src/ApolloServer.ts#L48-L51)
 - [Rails のログに含まれる request_id についてコードリーディングしたメモ](https://zenn.dev/bisque/scraps/e0c58eb6fd07fa)
 - [Rails の logger 周りのコードリーディング](https://blog.freedom-man.com/rails-logger-codereading)
 - [roidrage/lograge](https://github.com/roidrage/lograge)
