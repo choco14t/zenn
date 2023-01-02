@@ -2,28 +2,30 @@ name: textlint
 
 on:
   pull_request:
-    branches:
-      - main
+    branches: [main]
+    paths: ['articles/*.md']
 
 jobs:
-  textlint:
+  textlint-with-reviewdog:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-
-      - name: Install textlint
-        run: >
-          npm i -D
-          textlint
-          textlint-filter-rule-allowlist
-          textlint-rule-preset-ja-spacing
-          textlint-rule-preset-ja-technical-writing
-          textlint-rule-prh
-          textlint-rule-spellcheck-tech-word
+        with:
+          node-version: 18
+          cache: 'yarn'
 
       - name: Install modules
-        run: npm i
+        run: yarn install --frozen-lockfile
 
       - name: Run textlint
-        run: npx textlint articles/*.md
+        run: npx textlint articles/*.md >> .textlint.log
+
+      - name: Run Reviewdog
+        if: failure()
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: cat .textlint.log | reviewdog -f=checkstyle -name="textlint" -reporter="github-pr-review"
