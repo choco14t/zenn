@@ -17,12 +17,15 @@ jobs:
         with:
           node-version: 18
           cache: 'yarn'
+      - uses: reviewdog/action-setup@v1
+        with:
+        reviewdog_version: latest
 
       - name: Install modules
         run: yarn install --frozen-lockfile
 
       - name: Run textlint
-        run: npx textlint articles/*.md >> .textlint.log
+        run: yarn lint >> .textlint.log
 
       - name: Run Reviewdog
         if: failure()
