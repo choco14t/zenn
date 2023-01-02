@@ -33,11 +33,8 @@ jobs:
         if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
         run: yarn install --frozen-lockfile
 
-      - name: Test textlint
-        run: yarn textlint --help
-
       - name: Run textlint
-        run: yarn lint >> .textlint.log
+        run: yarn textlint articles/*.md >> .textlint.log
 
       - name: Run Reviewdog
         if: failure()
