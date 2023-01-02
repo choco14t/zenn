@@ -277,7 +277,8 @@ NestJS 上で graphql-shield を使うことも可能ですので、プロジェ
 
 - [Field middleware | NestJS](https://docs.nestjs.com/graphql/field-middleware)
 - [Extensions | NestJS](https://docs.nestjs.com/graphql/extensions)
-- [API Reference: ApolloServer - Apollo GraphQL Docs](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#middleware-specific-context-fields)
+- [packages/apollo-server-express/src/ApolloServer.ts#L48-L51](https://github.com/apollographql/apollo-server/blob/apollo-server-express%403.11.1/packages/apollo-server-express/src/ApolloServer.ts#L48-L51)
+- [packages/apollo-server-fastify/src/ApolloServer.ts#L20-L23](https://github.com/apollographql/apollo-server/blob/apollo-server-fastify%403.11.1/packages/apollo-server-fastify/src/ApolloServer.ts#L20-L23)
 
 # 宣伝
 
