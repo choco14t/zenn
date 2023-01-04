@@ -182,7 +182,7 @@ end
 
 今回リクエストヘッダを `x-request-id` とした理由はこのためです。
 
-# Rails + lograge のログにリクエスト ID を追加する
+## Rails + lograge のログにリクエスト ID を追加する
 
 lograge を使ってログ出力をしている場合は `config.lograge.custom_options` を使ってパラメータを追加することでログに ID を追加できます。
 
