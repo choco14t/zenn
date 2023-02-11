@@ -28,7 +28,7 @@ Rails・Node.js・GraphQL すべて業務ではスペースマーケットに入
 > Enabling enhancers for field resolvers can cause performance issues when you are returning lots of records and your field resolver is executed thousands of times. For this reason, when you enable fieldResolverEnhancers, we advise you to skip execution of enhancers that are not strictly necessary for your field resolvers. You can do this using the following helper function
 > https://docs.nestjs.com/graphql/other-features より引用
 
-あらためてコードを確認すると `fieldResolverEnhancers` の設定がされていることがわかりました。実装当初、Guard を使い Guard 内で DB アクセスすることで認証情報を取得していました。また、Guard をグローバルに設定していたことにより移行したマスタデータ取得時にも Guard の処理が実行されていることが判明しました。この問題については GraphQL の context 内で認証情報を取得するように実装を修正することで回避しました。
+あらためてコードを確認すると `fieldResolverEnhancers` の設定がされていることがわかりました。実装当初、Guard を使い Guard 内で DB アクセスして認証情報を取得していました。また、Guard をグローバルに設定していたことにより移行したマスタデータ取得時にも Guard の処理が実行されていることが判明しました。この問題については GraphQL の context 内で認証情報を取得するように実装を修正することで回避しました。
 
 :::message
 補足として、今回は Guard の使い方が適切でなかったことが問題であり、Guard そのものについて問題があったわけではありません。
@@ -64,7 +64,7 @@ https://zenn.dev/spacemarket/articles/implement-field-permissions-with-field-mid
 
 これまで私が取り組んだ移行業務を振り返ってみました。まだ道半ばな状態ではありますが、ほかのメンバーもチャプターと呼ばれる学習時間を使って移行に取り組んでくれているので徐々にエンドポイントが NestJS へ移行されていくことでしょう。
 
-移行に取り組んだ際に感じた NestJS や関連ライブラリに対する辛さはやはりあったので、それについては別途書けたらなと考えています。
+移行を取り組んだ際に感じた NestJS や関連ライブラリに対する辛さはやはりあったので、それについては別途書けたらなと考えています。
 
 # 宣伝
 
