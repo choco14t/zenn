@@ -15,6 +15,10 @@
   },
   "rules": {
     "preset-ja-spacing": {
+      "ja-space-around-code": {
+        "before": true,
+        "after": true
+      },
       "ja-space-between-half-and-full-width": {
         "space": "always"
       }
@@ -25,7 +29,8 @@
       },
       "sentence-length": {
         "max": 160
-      }
+      },
+      "ja-no-weak-phrase": false
     },
     "spellcheck-tech-word": true,
     "prh": {

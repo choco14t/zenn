@@ -164,7 +164,7 @@ _Users アプリケーションのログ_
 
 今回、NestJS アプリケーションに加えて Rails アプリケーションにもリクエスト ID を反映させる対応をしていたのでおまけとして書いておきます。
 
-Rails では `config.log_tags` を使うことでログにタグ付けが行えます。`config.log_tags = [:uuid]` とすることでログ 1 行に対して ID が付与されます。このとき、Rails では`x-request-id`のヘッダ情報が参照されるため、今回のようにゲートウェイで設定した ID を使うことができます。
+Rails では `config.log_tags` を使うことでログにタグ付けが行えます。`config.log_tags = [:uuid]` とすることでログ 1 行に対して ID が付与されます。このとき、Rails では `x-request-id` のヘッダ情報が参照されるため、今回のようにゲートウェイで設定した ID を使うことができます。
 
 :::details config/environments/development.rb
 
