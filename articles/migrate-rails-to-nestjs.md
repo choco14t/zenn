@@ -17,18 +17,18 @@ Rails・Node.js・GraphQL すべて業務ではスペースマーケットに入
 
 # エンドポイント移行
 
-大体の作業時間はエンドポイント移行を行っていました。Mutation はデータ更新や非同期ジョブを含むものが多いので Query の移行から着手し、その中でも利用目的や会場タイプと呼ばれるマスタデータ系統の Query から着手し始めて実装に慣れていきました。
+だいたいの作業時間はエンドポイント移行をしていました。Mutation はデータ更新や非同期ジョブを含むものが多いので Query の移行から着手し、その中でも利用目的や会場タイプと呼ばれるマスタデータ系統の Query から着手し始めて実装に慣れていきました。
 
 マスタデータの移行が完了した後はよく使われていそうな機能のエンドポイント移行にも着手しました。外部 API との連携やメール通知処理が必要な Mutation については別の API に実装がある都合上、Message Queue を使うことで連携を図りました。
 
 # パフォーマンス改善
 
-マスタデータの移行が無事完了して一区切りついたのも束の間、特定の時間帯になると NestJS アプリケーションのアラートが通知されるようになりました。発生当初は何故かわからなかったのですが、実装や過去の PR、ドキュメントを読み直してみるとどうやら Guard の機能と Federation の相性が悪いらしいという仮説が立てられました。NestJS のドキュメントには以下の記載があります。
+マスタデータの移行が無事完了して一区切りついたのも束の間、特定の時間帯になると NestJS アプリケーションのアラートが通知されるようになりました。発生当初はなぜかわからなかったのですが、実装や過去の PR、ドキュメントを読み直してみるとどうやら Guard の機能と Federation の相性が悪いらしいという仮説が立てられました。NestJS のドキュメントには以下の記載があります。
 
 > Enabling enhancers for field resolvers can cause performance issues when you are returning lots of records and your field resolver is executed thousands of times. For this reason, when you enable fieldResolverEnhancers, we advise you to skip execution of enhancers that are not strictly necessary for your field resolvers. You can do this using the following helper function
 > https://docs.nestjs.com/graphql/other-features より引用
 
-改めてコードを確認すると `fieldResolverEnhancers` の設定がされていることがわかりました。実装当初、Guard を使い Guard 内で DB アクセスすることで認証情報を取得していました。また、Guard をグローバルに設定していたことで移行したマスタデータ取得時にも Guard の処理が実行されていることが判明しました。この問題については GraphQL の context 内で認証情報を取得するように実装を修正することで回避しました。
+あらためてコードを確認すると `fieldResolverEnhancers` の設定がされていることがわかりました。実装当初、Guard を使い Guard 内で DB アクセスすることで認証情報を取得していました。また、Guard をグローバルに設定していたことにより移行したマスタデータ取得時にも Guard の処理が実行されていることが判明しました。この問題については GraphQL の context 内で認証情報を取得するように実装を修正することで回避しました。
 
 :::message
 補足として、今回は Guard の使い方が適切でなかったことが問題であり、Guard そのものについて問題があったわけではありません。
@@ -58,13 +58,13 @@ FieldMiddleware の実装サンプルは記事にもしているので良けれ�
 
 https://zenn.dev/spacemarket/articles/implement-field-permissions-with-field-middleware
 
-同機能を実現するライブラリとして graphql-shield があります。私が実装していた時点ではメンテナンスがされていなかったので採用を見送りましたが、現時点ではメンテナンスが再開されているので今後 GraphQL を使ってアクセス制御の実装を行おうとしている場合は検討しても良いかもしれません。and や or のような組み合わせが使えるため、FieldMiddleware より複雑な条件を実現できるはずです。
+同機能を実現するライブラリとして graphql-shield があります。私が実装していた時点ではメンテナンスがされていなかったので採用を見送りましたが、現時点ではメンテナンスが再開されているので今後 GraphQL を使ってアクセス制御を実装したい場合は検討しても良いはずです。and や or のような組み合わせが使えるため、FieldMiddleware より複雑な条件を実現できるはずです。
 
 # さいごに
 
-これまで私が取り組んだ移行業務を振り返ってみました。まだ道半ばな状態ではありますが、他のメンバーもチャプターと呼ばれる学習時間を使って移行に取り組んでくれているので徐々にエンドポイントが NestJS へ移行されていくことでしょう。
+これまで私が取り組んだ移行業務を振り返ってみました。まだ道半ばな状態ではありますが、ほかのメンバーもチャプターと呼ばれる学習時間を使って移行に取り組んでくれているので徐々にエンドポイントが NestJS へ移行されていくことでしょう。
 
-移行に取り組んだ際に感じた NestJS や関連ライブラリに対する辛さはやはりあったので、それについてもどこかで書けたらなと考えています。
+移行に取り組んだ際に感じた NestJS や関連ライブラリに対する辛さはやはりあったので、それについては別途書けたらなと考えています。
 
 # 宣伝
 
