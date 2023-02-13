@@ -3,7 +3,8 @@ title: 'RailsからNestJSへの移行に挑戦してみて'
 emoji: '🐈‍⬛'
 type: 'idea'
 topics: ['nestjs', 'apollo', 'graphql', '振り返り']
-published: false
+published: true
+published_at: 2023-02-13 13:00
 publication_name: 'spacemarket'
 ---
 
@@ -56,13 +57,13 @@ Job のやりとりができるところまでは確認できたのですが、�
 
 # Field Level Permission の実装
 
-一部 Field ではアクセスユーザーに応じて値を返すか制御するような実装が必要でした。NestJS には FieldMiddleware という機能が提供されているのでこの機能を使ってアクセス制御の実装を実現しました。FieldMiddleware の実装にあたり、GraphQL から認証情報や DataSource オブジェクトを取得したためパフォーマンス改善時に context を用いた実装に変更したことが活きました。
+一部 Field ではアクセスユーザーに応じて値を返すか制御するような実装が必要でした。NestJS には FieldMiddleware という機能が提供されているのでこの機能を使ってアクセス制御の実装を実現しました。FieldMiddleware の実装にあたり、context から認証情報や DataSource オブジェクトを取得したためパフォーマンス改善時に修正したことが活きました。
 
 FieldMiddleware の実装サンプルは記事にもしているので良ければ読んでみてください。
 
 https://zenn.dev/spacemarket/articles/implement-field-permissions-with-field-middleware
 
-同機能を実現するライブラリとして graphql-shield があります。私が実装していた時点ではメンテナンスがされていなかったので採用を見送りましたが、現時点ではメンテナンスが再開されているので今後 GraphQL を使ってアクセス制御を実装したい場合は検討しても良いはずです。and や or のような組み合わせが使えるため、FieldMiddleware より複雑な条件を実現できるはずです。
+同機能を実現するライブラリとして graphql-shield があります。私が実装していた時点ではメンテナンスがされていなかったので採用を見送りましたが、現時点ではメンテナンスが再開されているので今後 GraphQL を使ってアクセス制御を実装したい場合は検討しても良いと思います。and や or のような組み合わせが使えるため、FieldMiddleware より複雑な条件を実現できます。
 
 # さいごに
 
