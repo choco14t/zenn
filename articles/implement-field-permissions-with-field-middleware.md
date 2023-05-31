@@ -1,11 +1,10 @@
 ---
-title: '[NestJS] FieldMiddleware で Field Permissions を実装する'
+title: 'FieldMiddleware で Field Permissions を実装する'
 emoji: '🐈‍⬛'
 type: 'tech' # tech: 技術記事 / idea: アイデア
 topics: ['NestJS', 'Apollo', 'GraphQL', 'TypeScript']
 published: true
 published_at: 2022-10-14 10:00
-publication_name: 'spacemarket'
 ---
 
 :::message
@@ -13,8 +12,6 @@ publication_name: 'spacemarket'
 :::
 
 # 始めに
-
-[スペースマーケット](https://www.spacemarket.com/)でバックエンドエンジニアをしている choco です。
 
 GraphQL で API を実装していて、ある Type のフィールドに対してアクセス制御を適用したいといったケースが考えられます。たとえば、ログインユーザーはアクセスできる、特定の権限を持つユーザーのみアクセスできるといったものが挙げられます。
 
@@ -279,16 +276,3 @@ NestJS 上で graphql-shield を使うことも可能ですので、プロジェ
 - [Extensions | NestJS](https://docs.nestjs.com/graphql/extensions)
 - [packages/apollo-server-express/src/ApolloServer.ts#L48-L51](https://github.com/apollographql/apollo-server/blob/apollo-server-express%403.11.1/packages/apollo-server-express/src/ApolloServer.ts#L48-L51)
 - [packages/apollo-server-fastify/src/ApolloServer.ts#L20-L23](https://github.com/apollographql/apollo-server/blob/apollo-server-fastify%403.11.1/packages/apollo-server-fastify/src/ApolloServer.ts#L20-L23)
-
-# 宣伝
-
-スペースマーケットでは一緒に働く仲間を募集しています。
-サービス内容や、使用技術に興味を持たれた方はぜひご応募ください。
-
-https://www.wantedly.com/projects/1113570
-https://www.wantedly.com/projects/1113544
-https://www.wantedly.com/projects/1061116
-
-カルチャーの概要や使用技術が知りたい方はこちら。
-
-https://spacemarket.co.jp/recruit/engineer/

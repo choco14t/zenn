@@ -5,14 +5,11 @@ type: 'tech' # tech: 技術記事 / idea: アイデア
 topics: ['graphql', 'apollo', 'typescript', 'nodejs', 'nestjs']
 published: true
 published_at: 2023-01-07 11:00
-publication_name: 'spacemarket'
 ---
 
 # はじめに
 
-[スペースマーケット](https://www.spacemarket.com/)でバックエンドエンジニアをしている choco です。
-
-スペースマーケットでは API Gateway として Apollo Gateway(Federation) を使用しています。現在 API のログは出力しているのですが、1 リクエスト内で実行された GraphQL Query が把握しづらいという課題がありました。
+現在 API のログは出力しているのですが、1 リクエスト内で実行された GraphQL Query が把握しづらいという課題がありました。
 
 今回は Apollo Gateway の RemoteGraphQLDataSource を使用してリクエストヘッダに ID を付与し、各アプリケーションの GraphQL context から参照できるようにすることで改善を試みました。
 
@@ -234,16 +231,3 @@ Apollo Gateway を使ったアプリケーションの運用をされている�
 - [Rails のログに含まれる request_id についてコードリーディングしたメモ](https://zenn.dev/bisque/scraps/e0c58eb6fd07fa)
 - [Rails の logger 周りのコードリーディング](https://blog.freedom-man.com/rails-logger-codereading)
 - [roidrage/lograge](https://github.com/roidrage/lograge)
-
-# 宣伝
-
-スペースマーケットでは一緒に働く仲間を募集しています。
-サービス内容や、使用技術に興味を持たれた方はぜひご応募ください。
-
-https://www.wantedly.com/projects/1113570
-https://www.wantedly.com/projects/1113544
-https://www.wantedly.com/projects/1061116
-
-カルチャーの概要や使用技術が知りたい方はこちら。
-
-https://spacemarket.co.jp/recruit/engineer/
