@@ -1,10 +1,11 @@
 ---
-title: '[NestJS] @nestjs/bull に依存したクラスのテスト'
+title: '@nestjs/bull に依存したクラスのテスト'
 emoji: '🐈‍⬛'
 type: 'tech' # tech: 技術記事 / idea: アイデア
 topics: ['NestJS', 'Bull']
 published: true
 ---
+
 # 始めに
 
 最近 [@nestjs/bull](https://github.com/nestjs/bull) を使った非同期ジョブの実装をしていて、テストを書くのに少し手間どったので解決策の共有になります。

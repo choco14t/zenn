@@ -1,5 +1,5 @@
 ---
-title: '[NestJS] FieldMiddleware で Field Permissions を実装する'
+title: 'FieldMiddleware で Field Permissions を実装する'
 emoji: '🐈‍⬛'
 type: 'tech' # tech: 技術記事 / idea: アイデア
 topics: ['NestJS', 'Apollo', 'GraphQL', 'TypeScript']
