@@ -5,12 +5,9 @@ type: 'idea'
 topics: ['nestjs', 'apollo', 'graphql', '振り返り']
 published: true
 published_at: 2023-02-13 13:00
-publication_name: 'spacemarket'
 ---
 
 # はじめに
-
-[スペースマーケット](https://www.spacemarket.com/)でバックエンドエンジニアをしている choco です。
 
 直近の主な業務として、Rails で実装されている GraphQL API を NestJS に移行していました。
 まだ移行完了までは到達できていませんが、どういうことをしてきたか棚卸しの意味も込めて書き出してみました。
@@ -37,7 +34,7 @@ Rails・Node.js・GraphQL すべて業務ではスペースマーケットに入
 あらためてコードを確認すると `fieldResolverEnhancers` の設定がされていることがわかりました。実装当初、Guard を使い Guard 内で DB アクセスして認証情報を取得していました。また、Guard をグローバルに設定していたことにより移行したマスタデータ取得時にも Guard の処理が実行されていることが判明しました。この問題については GraphQL の context 内で認証情報を取得するように実装を修正することで回避しました。
 
 ![](/images/migrate-rails-to-nestjs/performance_log.png)
-*修正リリース後のアクセスログ*
+_修正リリース後のアクセスログ_
 
 # NestJS に contribute
 
@@ -70,17 +67,3 @@ https://zenn.dev/spacemarket/articles/implement-field-permissions-with-field-mid
 これまで私が取り組んだ移行業務を振り返ってみました。まだ道半ばな状態ではありますが、ほかのメンバーもチャプターと呼ばれる学習時間を使って移行に取り組んでくれているので徐々にエンドポイントが NestJS へ移行されていくことでしょう。
 
 移行を取り組んだ際に感じた NestJS や関連ライブラリに対する辛さはやはりあったので、それについては別途書けたらなと考えています。
-
-# 宣伝
-
-スペースマーケットでは一緒に働く仲間を募集しています。
-サービス内容や、使用技術に興味を持たれた方はぜひご応募ください。
-
-https://www.wantedly.com/projects/1113570
-https://www.wantedly.com/projects/1113544
-https://www.wantedly.com/projects/1061116
-
-カルチャーの概要や使用技術が知りたい方はこちら。
-
-https://spacemarket.co.jp/recruit/engineer/
-

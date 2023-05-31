@@ -5,12 +5,9 @@ type: 'tech' # tech: 技術記事 / idea: アイデア
 topics: ['graphql', 'apollo', 'typescript', 'nodejs']
 published: true
 published_at: 2023-01-06 11:00
-publication_name: 'spacemarket'
 ---
 
 # はじめに
-
-[スペースマーケット](https://www.spacemarket.com/)でバックエンドエンジニアをしている choco です。
 
 Apollo Server の v4 が 2022 年 10 月にリリースされました。これにより v2、v3 は deprecated となりました。
 
@@ -192,16 +189,3 @@ console.log(`🚀 Server ready at http://localhost:4000/graphql`);
 去年末に [レイオフ](https://www.apollographql.com/blog/announcement/ceo-geoff-schmidts-message-to-apollo-employees/) を実施したこともあり、組織としても転換期と言えます。
 
 Apollo Server v2、v3 を使っている方の参考になれば幸いです。
-
-# 宣伝
-
-スペースマーケットでは一緒に働く仲間を募集しています。
-サービス内容や、使用技術に興味を持たれた方はぜひご応募ください。
-
-https://www.wantedly.com/projects/1113570
-https://www.wantedly.com/projects/1113544
-https://www.wantedly.com/projects/1061116
-
-カルチャーの概要や使用技術が知りたい方はこちら。
-
-https://spacemarket.co.jp/recruit/engineer/
