@@ -3,7 +3,7 @@ title: 'Apollo Server v4 の調査メモ'
 emoji: '‍📝'
 type: 'tech' # tech: 技術記事 / idea: アイデア
 topics: ['graphql', 'apollo', 'typescript', 'nodejs']
-published: true
+published: false
 published_at: 2023-01-06 11:00
 ---
 

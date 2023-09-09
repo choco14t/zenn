@@ -1,8 +1,8 @@
 ---
-title: '[NestJS] Guard を使わず Apollo Server の context で認証処理を行う'
-emoji: '🐈‍⬛'
-type: 'idea' # tech: 技術記事 / idea: アイデア
-topics: ['NestJS', 'Apollo', 'GraphQL', 'TypeScript']
+title: "[NestJS] Guard を使わず Apollo Server の context で認証処理を行う"
+emoji: "🐈‍⬛"
+type: "idea" # tech: 技術記事 / idea: アイデア
+topics: ["NestJS", "Apollo", "GraphQL", "TypeScript"]
 published: false
 ---
 

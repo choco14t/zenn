@@ -3,7 +3,7 @@ title: 'データアクセスレイヤに対するテストの考察'
 emoji: '🦁‍'
 type: 'idea' # tech: 技術記事 / idea: アイデア
 topics: ['test']
-published: true
+published: false
 published_at: 2022-12-01 12:00
 ---
 

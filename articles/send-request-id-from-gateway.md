@@ -3,7 +3,7 @@ title: 'リクエストIDを追加して調査を快適にする'
 emoji: '‍🔍'
 type: 'tech' # tech: 技術記事 / idea: アイデア
 topics: ['graphql', 'apollo', 'typescript', 'nodejs', 'nestjs']
-published: true
+published: false
 published_at: 2023-01-07 11:00
 ---
 

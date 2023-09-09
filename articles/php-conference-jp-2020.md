@@ -3,7 +3,7 @@ title: 'PHP Conference Japan 2020 まとめ'
 emoji: '🐘'
 type: 'tech' # tech: 技術記事 / idea: アイデア
 topics: ['PHP']
-published: true
+published: false
 ---
 
 12 月 12 日に実施された PHP Conference Japan 2020 をまとめました。

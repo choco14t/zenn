@@ -3,7 +3,7 @@ title: 'RailsからNestJSへの移行に挑戦してみて'
 emoji: '🐈‍⬛'
 type: 'idea'
 topics: ['nestjs', 'apollo', 'graphql', '振り返り']
-published: true
+published: false
 published_at: 2023-02-13 13:00
 ---
 

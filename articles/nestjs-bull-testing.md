@@ -3,7 +3,7 @@ title: '@nestjs/bull に依存したクラスのテスト'
 emoji: '🐈‍⬛'
 type: 'tech' # tech: 技術記事 / idea: アイデア
 topics: ['NestJS', 'Bull']
-published: true
+published: false
 ---
 
 # 始めに
